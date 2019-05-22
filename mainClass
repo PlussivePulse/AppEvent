@@ -1,0 +1,227 @@
+//Version 1.4 Last Update for AppEvent-LoginTrap
+import java.io.IOException;
+
+import javax.naming.spi.DirStateFactory.Result;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+public class mainClass {
+	private static boolean detonator = false;
+	private static mainRunner whoisthefastest = new mainRunner();
+	private static surpriseBoi s = new surpriseBoi();
+	private static boolean alreadyWin = false;
+	private static Object getRunnerName;
+	private static boolean strangesLoops = false;
+	
+	public static void main(String args[]){
+		
+		Runnable runner = new Runnable() {
+		
+			public void run() {
+				
+				boolean timestone = true;
+				int looper = InfinityLoops();
+				if(looper==JOptionPane.YES_OPTION){
+					strangesLoops = true;
+				}
+				
+				String readytoRun = getFieldReady();
+				if(readytoRun==null||readytoRun.equals("")){ //Handle for empty and Null Exception or cancel.
+					timestone=false;
+					s.popDialog("String can't be empty.");
+				}
+					while(timestone){
+						//Runner Field
+
+						try {detonator = whoisthefastest.checkRunning();}
+						catch (IOException e1) {e1.printStackTrace();}
+						
+						if (detonator==true&&alreadyWin==false){
+							s.popDialog(readytoRun);
+							if(strangesLoops==false){
+								timestone = false;
+							}
+						}
+						
+						try {Thread.sleep(2000);
+						} catch (InterruptedException e) {e.printStackTrace();}
+					}
+				}};
+			
+			Thread theone = new Thread(runner);
+			theone.start();
+			
+			}
+	
+			private static String getFieldReady(){
+				JFrame trackField = new JFrame();
+				getRunnerName = JOptionPane.showInputDialog(trackField, "Pop Up String Set Up : " );
+					return (String) getRunnerName;
+			}
+				
+			private static Integer InfinityLoops(){
+				int runnerChoices = JOptionPane.showConfirmDialog(null, "Infinity Loops?");
+				return runnerChoices;
+			}
+			
+}
+
+class mainRunner {
+	
+	private String stringLine;
+	private boolean processTargetFound = false; //by default
+	
+	private String processTargetName = "";
+	private boolean processSelected = false;
+	
+	private javax.swing.DefaultComboBoxModel<String> boxBody = new DefaultComboBoxModel<String>();
+	
+	private final double version = 1.4;
+	private boolean choseValue = false;
+	
+	private void processLoader() throws java.io.IOException{ //changed name from processCheck to processesLoader
+		
+		String pidInfo ="";
+		Process loader =Runtime.getRuntime().exec(System.getenv("windir") +"\\system32\\"+"tasklist.exe");
+		java.io.BufferedReader winLoad =  new java.io.BufferedReader(new java.io.InputStreamReader(loader.getInputStream()));
+
+		while ((stringLine = winLoad.readLine()) != null){
+		    pidInfo+=stringLine; 
+		}
+
+		winLoad.close();
+
+		//last check for 1.4
+		String[] processTargetArray = null;
+		if(processTargetName.contains(" ")){
+			processTargetArray = processTargetName.split(" "); //blank
+			if(pidInfo.contains(processTargetArray[0])){
+			    processTargetName = processTargetArray[0];
+			}
+		}
+		
+		
+		if(pidInfo.contains(processTargetName)){
+		    processTargetFound = true;
+		    System.out.println();
+		}
+	}
+	
+	private String processPreLoader() throws java.io.IOException{ //for 1.4 Login Trap
+		
+		String pidInfo ="";
+		Process loader =Runtime.getRuntime().exec(System.getenv("windir") +"\\system32\\"+"tasklist.exe");
+		java.io.BufferedReader winLoad =  new java.io.BufferedReader(new java.io.InputStreamReader(loader.getInputStream()));
+
+		while ((stringLine = winLoad.readLine()) != null){
+		    pidInfo+=stringLine; 
+		}
+
+		winLoad.close();
+
+		//checkContain(pidInfo);
+		return pidInfo;
+	}
+	
+	private void checkContain(String pidInfo){ //broken
+		//handle illegal process type
+		String[] processTargetArray = null;
+		if(processTargetName.contains(" ")){
+			processTargetArray = processTargetName.split(" "); //blank
+			if(pidInfo.contains(processTargetArray[0])){
+			    processTargetFound = true;
+			    processTargetName = processTargetArray[0];
+			}
+		}else{ 
+			if (pidInfo.contains(processTargetName)){
+		    processTargetFound = true;
+			}
+		}
+	}
+	
+	private void checkContain(String pidInfo, String processname){
+		//handle illegal process type
+		if(pidInfo.contains(processname)){
+		    processTargetFound = true;
+		}
+	}
+	
+	private void processLoaderBeta() throws java.io.IOException{ //developing in progress
+		
+		
+		//load process part
+		String pidInfo ="";
+		Process loader = Runtime.getRuntime().exec(System.getenv("windir") +"\\system32\\"+"tasklist.exe");
+		java.io.BufferedReader winLoad;
+		//variable declaration
+		StringBuilder output = new StringBuilder();
+		
+		winLoad =  new java.io.BufferedReader(new java.io.InputStreamReader(loader.getInputStream()));
+		while((pidInfo = winLoad.readLine()) != null){
+			if(!pidInfo.isEmpty()){
+				output.append(pidInfo).append("\r\n");
+			}
+		}
+		winLoad.close();
+	}
+	
+	public void processesListing() throws java.io.IOException{ //menu selection part.
+		javax.swing.JPanel processList = new javax.swing.JPanel();
+		processList.add(new javax.swing.JLabel("Active Programs List : "));
+		
+		addProcess();
+		
+		@SuppressWarnings({ "rawtypes", "unchecked" }) //Testing line. Not needed.
+		javax.swing.JComboBox boxLoader = new javax.swing.JComboBox(boxBody);
+		processList.add(boxLoader); //add menu to page.
+		
+		//confirmation button and logic to submit
+		int actionChoseHandler = JOptionPane.showConfirmDialog(null, processList, "Process List Selection", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
+		switch(actionChoseHandler) {
+		case JOptionPane.OK_OPTION: optionSelected(actionChoseHandler, boxLoader);
+		}
+		
+		processLoader(); //Note this has to run the last to check if the program is really running.
+	}
+	
+	private void optionSelected(Integer actionChoseHandler, @SuppressWarnings("rawtypes") javax.swing.JComboBox boxLoader){
+		processTargetName = (String) boxLoader.getSelectedItem();
+		processSelected = true;
+	}
+	
+	public boolean checkRunning() throws java.io.IOException {
+		if(processSelected==false){processesListing();} //switch from processLoader or processChecker
+		String pidInfo = processPreLoader();
+		checkContain(pidInfo, processTargetName);
+		return processTargetFound;
+		
+	}
+	
+	private void addProcess() throws java.io.IOException{
+		//get all process list from processCheck\
+		
+		if(version==1.4){
+			String pidInfo = processPreLoader();
+			processTargetName = "studentlogin2.exe";
+			checkContain(pidInfo);
+			if(processTargetFound==true){
+				processTargetFound = false; //if user close apps after selection check.
+				boxBody.addElement("studentlogin2.exe - running");
+				}
+			boxBody.addElement("studentlogin2.exe"); //add as default
+		}
+	}
+}
+
+class surpriseBoi { //imported from interactingFunction
+
+	private JFrame popUpFrame;
+	
+	public void popDialog(String text) {
+		JOptionPane.showMessageDialog(popUpFrame, text);
+	}
+	
+}
+
