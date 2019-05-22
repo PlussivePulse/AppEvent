@@ -24,10 +24,12 @@ public class mainClass {
 				
 				int liability = agreement();
 				if(liability==JOptionPane.NO_OPTION){
-					
+					athleteAllowed = false;
 				}else if(liability==JOptionPane.CLOSED_OPTION){
 					timestone = false;
-					
+					athleteAllowed = false;
+				}else{
+					athleteAllowed = true;
 				}
 				
 				if(athleteAllowed==true){
